@@ -1,0 +1,10 @@
+Flask==1.1.2
+Flask-BasicAuth==0.2.0
+Flask-Debug==0.4.3
+Flask-Ext==0.1
+Flask-MySQL==1.5.2
+mysql-connector==2.2.9
+PyMySQL==1.0.2
+PyMySQL==1.0.2
+requests==2.25.1
+python-dotenv==0.18.0

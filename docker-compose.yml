@@ -1,0 +1,72 @@
+version: "3.7"
+services:
+  clientes:
+    build:
+      dockerfile: ./app/cli.dockerfile
+      context: .
+    image: clientes_api
+    container_name: clientes_api
+    ports:
+    - "5100:5100"
+    networks:
+    - networks_clientes
+    depends_on:
+    - "db"
+  enderecos:
+    build:
+      dockerfile: ./app/end.dockerfile
+      context: .
+    image: enderecos_api
+    container_name: enderecos_api
+    ports:
+    - "5200:5200"
+    networks:
+    - networks_clientes
+    depends_on:
+    - "db"
+  produtos:
+    build:
+      dockerfile: ./app/prod.dockerfile
+      context: .
+    image: produtos_api
+    container_name: produtos_api
+    ports:
+    - "5300:5300"
+    networks:
+    - networks_clientes
+    depends_on:
+    - "db"
+  vendas:
+    build:
+      dockerfile: ./app/vend.dockerfile
+      context: .
+    image: vendas_api
+    container_name: vendas_api
+    ports:
+    - "5400:5400"
+    networks:
+    - networks_clientes
+    depends_on:
+    - "db"
+  db:
+    build:
+      dockerfile: ./db/db.dockerfile
+      context: .
+    image: db_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    container_name: db_mysql
+    ports:
+    - "3308:3308"
+    volumes:
+    - /home/sil_silva/workspace/docker/volumes/mysql:/volumes/mysql
+    networks:
+    - networks_clientes
+    # env_file:
+    #   - .env      
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_clientes
+networks:
+  networks_clientes:
+    driver: bridge
